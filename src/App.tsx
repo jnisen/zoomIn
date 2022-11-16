@@ -1,25 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
+import axios from 'axios';
+import {useEffect, useState} from 'react';
 import './App.css';
 
+const URL_API = 'https://swapi.dev/api/films'
+
 function App() {
+  const [films, setFilms] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  const getFilms = async () => {
+    const json = await axios(URL_API)
+    const response = await json
+    const data = response.data.results
+    setFilms(data)
+  }
+  
+
+  useEffect(() => {
+    getFilms()
+    setLoading(false)
+  }, [])
+
+
+  if (loading)  return <p>Loading</p>;
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <pre>
+    {JSON.stringify(films, null, 2)}
+   </pre>
   );
 }
 

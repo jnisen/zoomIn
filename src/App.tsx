@@ -1,17 +1,18 @@
-import axios from 'axios';
 import {useEffect, useState} from 'react';
-import {Film} from '../src/types'
+import { starWarsContext } from '../src/context/starWarsContext'
+
 import './App.css';
-import TOC from './components/TOC'
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 import Details from './components/Details';
+import TOC from './components/TOC'
+import Home from './components/Home'
 
-const URL_API = 'https://swapi.dev/api/films'
+import {Film} from '../src/types'
 
 
-const addIdOnData = (data:Array<Film>) => {
-  return  data = data.map((film:Film, index:number) => Object.assign({}, {id: index+1}, film))
-}
+import {getAllFilms} from '../src/shared/api/getAllFilms'
 
 
 function App() {
@@ -19,11 +20,8 @@ function App() {
   const [loading, setLoading] = useState<Boolean>(true)
 
   const getFilms = async () => {
-    const json = await axios(URL_API)
-    const response = await json
-    let data = response.data.results
-    const dataWithId = addIdOnData(data)
-    setFilms(dataWithId)
+    const allFilms = await getAllFilms()
+    setFilms(allFilms)
   }
   
 
@@ -33,17 +31,24 @@ function App() {
   }, [])
 
 
+  const value = {
+    films
+  }
+
   if (films.length === 0)  return <p>Loading</p>;
 
   return (
+    <starWarsContext.Provider value={value}>
     <div className="separate">
    <Router>
-      <TOC films={films}/>
+      <TOC/>
     <Routes>
-      <Route path="/film/:id" element = {<Details films={films}/>}/>
+    <Route path="/" element = {<Home/>}/>
+      <Route path="/film/:id" element = {<Details/>}/>
     </Routes>
    </Router>
    </div>
+   </starWarsContext.Provider>
   );
 }
 

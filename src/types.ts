@@ -1,5 +1,5 @@
 export interface Film{
-    id:number;
+    id:number | string | undefined;
     episode_id: number;
     title: string;
     opening_crawl: string;
@@ -8,12 +8,12 @@ export interface Film{
     release_date: string;
     characters: Array<string>;
     planets: Array<string>;
-    starships: Array<string>;
-    vehicles: Array<string>;
-    species: Array<string>;
-    created:string;
-    edited:string;
-    url: string;
+    starships?: Array<string>;
+    vehicles?: Array<string>;
+    species?: Array<string>;
+    created?:string;
+    edited?:string;
+    url?: string;
   }
   
   export interface Character{

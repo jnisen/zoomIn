@@ -1,11 +1,16 @@
 import { Link } from "react-router-dom";
-import {Film} from '../../src/types';
+import { useGlobalContext } from '../context/starWarsContext'
 
-function TOC(films:any) {
+const TOC: React.FC = ():JSX.Element => {
+        
+        const {films} = useGlobalContext()
+
+
   return (
    <nav className="toc">
+         <Link to={{pathname: `/`}}>Home</Link>
     <ul>
-    {films.films.map((note:any) => (
+    {films.map((note:any) => (
             <li key = {note.id}>
                     <Link to={{pathname: `film/${note.id}`}}>{note.title}</Link>
             </li>

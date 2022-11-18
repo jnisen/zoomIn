@@ -4,6 +4,7 @@ import type { Film, FavouriteFilm } from '../types';
 import { getSingleFilm } from '../shared/api/getSingleFilm';
 import { imagesFilms } from './images';
 import Loader from '../shared/components/Loader';
+import styled from 'styled-components';
 
 type filmParams = {
     id: string;
@@ -30,7 +31,6 @@ const Details: React.FC = (): JSX.Element => {
 
     const [image, setImage] = useState('');
 
-    console.log(favorites[String(id)]);
     const getFilm = useCallback(async () => {
         const film: any = await getSingleFilm(id);
         setMovieDetail(film);
@@ -50,16 +50,25 @@ const Details: React.FC = (): JSX.Element => {
         };
     }, [id, getFilm]);
 
-    const styles = {
-        header: {
-            backgroundImage: `url(${image})`,
-            backgroundPosition: 'center',
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat',
-            height: '100vh',
-            opacity: 0.6,
-        },
-    };
+    const DetailBackground = styled.div`
+        height: '100vh';
+        width: 80vw;
+        position: relative;
+        isolation: isolate;
+
+        &:after {
+            content: '';
+            position: absolute;
+            background: white;
+            inset: 0;
+            z-index: -1;
+            opacity: 0.15;
+            background-image: url(${image});
+            background-position: 'center';
+            background-size: 'cover';
+            background-repeat: 'no-repeat';
+        }
+    `;
 
     const handleToggle = () => {
         const idS = String(id);
@@ -72,18 +81,21 @@ const Details: React.FC = (): JSX.Element => {
     if (loading) return <Loader />;
 
     return (
-        <div className='details' style={styles.header}>
-            <h1 className='details__title'>
-                {movieDetail.title}
+        <DetailBackground>
+            <h1 className='details__title'>{movieDetail.title}</h1>
+            <h4 style={{ textAlign: 'center' }}>
+                Favourite Film:{' '}
                 <i
                     className={`${
-                        favorites[String(id)] ? 'fa fa-heart' : 'fa fa-heart-o'
+                        favorites[String(id)]
+                            ? 'fa fa-heart heart'
+                            : 'fa fa-heart-o heart'
                     }`}
                     aria-hidden='true'
                     onClick={handleToggle}
                     style={{ color: favorites[String(id)] ? 'red' : '' }}
                 />
-            </h1>
+            </h4>
             <p className='details__director'>
                 Director: {movieDetail.director}
             </p>
@@ -105,7 +117,7 @@ const Details: React.FC = (): JSX.Element => {
                     return <div key={planets.name}> - {planets.name}</div>;
                 })}
             </div>
-        </div>
+        </DetailBackground>
     );
 };
 

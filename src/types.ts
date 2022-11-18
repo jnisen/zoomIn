@@ -15,12 +15,6 @@ export interface Film {
     edited?: string;
     url?: string;
 }
-
-export interface FavouriteFilm {
-    id: string;
-    favorite: boolean;
-}
-
 export interface Character {
     name: string;
     height: string;

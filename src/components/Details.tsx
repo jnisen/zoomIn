@@ -1,10 +1,11 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState, useCallback } from 'react';
-import type { Film, FavouriteFilm } from '../types';
+import type { Film } from '../types';
 import { getSingleFilm } from '../shared/api/getSingleFilm';
 import { imagesFilms } from './images';
 import Loader from '../shared/components/Loader';
 import styled from 'styled-components';
+import { useGlobalContext } from '../context/starWarsContext';
 
 type filmParams = {
     id: string;
@@ -12,6 +13,8 @@ type filmParams = {
 
 const Details: React.FC = (): JSX.Element => {
     const { id } = useParams<filmParams>();
+    const { favorites, setFavorites } = useGlobalContext();
+    
     const [loading, setLoading] = useState<Boolean>(true);
     const [movieDetail, setMovieDetail] = useState<Film>({
         id: '',
@@ -25,9 +28,11 @@ const Details: React.FC = (): JSX.Element => {
         planets: [],
     });
 
-    const [favorites, setFavorites] = useState<Record<Film['id'], boolean>>(
-        JSON.parse(localStorage.getItem('favorites') || '{}') //lazy initialization
-    );
+
+
+    // const [favorites, setFavorites] = useState<Record<Film['id'], boolean>>(
+    //     JSON.parse(localStorage.getItem('favorites') || '{}')
+    // );
 
     const [image, setImage] = useState('');
 
@@ -37,9 +42,9 @@ const Details: React.FC = (): JSX.Element => {
         setLoading(false);
     }, [id]);
 
-    useEffect(() => {
-        localStorage.setItem('favorites', JSON.stringify(favorites));
-    }, [favorites]);
+    // useEffect(() => {
+    //     localStorage.setItem('favorites', JSON.stringify(favorites));
+    // }, [favorites]);
 
     useEffect(() => {
         const imgFilm: any = imagesFilms.filter((img) => String(img.id) === id);

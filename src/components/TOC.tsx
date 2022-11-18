@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useGlobalContext } from '../context/starWarsContext';
 
 const TOC: React.FC = (): JSX.Element => {
-    const { films } = useGlobalContext();
+    const { films, favorites } = useGlobalContext();
 
     return (
         <div className='toc'>
@@ -19,7 +19,20 @@ const TOC: React.FC = (): JSX.Element => {
                             to={{ pathname: `film/${note.id}` }}
                             className='toc__link'
                         >
-                            {note.title}
+                            <i
+                                className={`${
+                                    favorites[String(note.id)]
+                                        ? 'fa fa-heart heart'
+                                        : 'fa fa-heart-o heart'
+                                }`}
+                                aria-hidden='true'
+                                style={{
+                                    color: favorites[String(note.id)]
+                                        ? 'red'
+                                        : '',
+                                }}
+                            />
+                            {'    '} {note.title}
                         </Link>
                     </li>
                 ))}

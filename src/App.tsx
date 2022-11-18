@@ -17,6 +17,9 @@ import { getAllFilms } from '../src/shared/api/getAllFilms';
 function App() {
     const [films, setFilms] = useState<Array<Film>>([]);
     const [loading, setLoading] = useState<Boolean>(true);
+    const [favorites, setFavorites] = useState<Record<Film['id'], boolean>>(
+        JSON.parse(localStorage.getItem('favorites') || '{}')
+    );
 
     const getFilms = async () => {
         const allFilms = await getAllFilms();
@@ -28,8 +31,14 @@ function App() {
         setLoading(false);
     }, []);
 
+    useEffect(() => {
+        localStorage.setItem('favorites', JSON.stringify(favorites));
+    }, [favorites]);
+
     const value = {
         films,
+        favorites,
+        setFavorites
     };
 
     if (films.length === 0) return <Loader />;

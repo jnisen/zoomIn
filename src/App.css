@@ -19,10 +19,42 @@ body {
 .separate {
     display: flex;
     flex-direction: row;
+    height: 100vh;
+}
+
+.loader {
+    margin: 0 auto;
+    background-color: black;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 70vh;
+}
+
+.loader--logo {
+    animation: loaderSpin infinite 2.5s linear;
+    height: 4rem;
+    fill: yellow;
+}
+
+.loading--data {
+    color: yellow;
+}
+
+@keyframes loaderSpin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .container {
-    width: 80vw;
+    width: 80%;
     background-color: black;
     display: flex;
     justify-content: center;
@@ -31,7 +63,7 @@ body {
 }
 
 .container__starWars {
-    width: 40vw;
+    width: 40%;
     margin: 0 auto;
 }
 
@@ -89,7 +121,6 @@ li {
 .details {
     width: 80vw;
     position: relative;
-    background-color: black;
 }
 
 .details__title {

@@ -1,8 +1,9 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState, useCallback } from 'react';
-import { Film } from '../types';
+import type { Film, FavouriteFilm } from '../types';
 import { getSingleFilm } from '../shared/api/getSingleFilm';
 import { imagesFilms } from './images';
+import Loader from '../shared/components/Loader';
 
 type filmParams = {
     id: string;
@@ -22,13 +23,23 @@ const Details: React.FC = (): JSX.Element => {
         characters: [],
         planets: [],
     });
+
+    const [favorites, setFavorites] = useState<Record<Film['id'], boolean>>(
+        JSON.parse(localStorage.getItem('favorites') || '{}') //lazy initialization
+    );
+
     const [image, setImage] = useState('');
 
+    console.log(favorites[String(id)]);
     const getFilm = useCallback(async () => {
         const film: any = await getSingleFilm(id);
         setMovieDetail(film);
         setLoading(false);
     }, [id]);
+
+    useEffect(() => {
+        localStorage.setItem('favorites', JSON.stringify(favorites));
+    }, [favorites]);
 
     useEffect(() => {
         const imgFilm: any = imagesFilms.filter((img) => String(img.id) === id);
@@ -39,21 +50,40 @@ const Details: React.FC = (): JSX.Element => {
         };
     }, [id, getFilm]);
 
-    // const styles = {
-    //     header: {
-    //         backgroundImage: `url(${image})`,
-    //         backgroundPosition: 'center',
-    //         backgroundSize: 'cover',
-    //         backgroundRepeat: 'no-repeat',
-    //         height: '100vh',
-    //     },
-    // };
+    const styles = {
+        header: {
+            backgroundImage: `url(${image})`,
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            height: '100vh',
+            opacity: 0.6,
+        },
+    };
 
-    if (loading) return <p>Loading...</p>;
+    const handleToggle = () => {
+        const idS = String(id);
+        setFavorites({
+            ...favorites,
+            [idS]: !favorites[idS],
+        });
+    };
+
+    if (loading) return <Loader />;
 
     return (
-        <div className='details'>
-            <h1 className='details__title'>{movieDetail.title}</h1>
+        <div className='details' style={styles.header}>
+            <h1 className='details__title'>
+                {movieDetail.title}
+                <i
+                    className={`${
+                        favorites[String(id)] ? 'fa fa-heart' : 'fa fa-heart-o'
+                    }`}
+                    aria-hidden='true'
+                    onClick={handleToggle}
+                    style={{ color: favorites[String(id)] ? 'red' : '' }}
+                />
+            </h1>
             <p className='details__director'>
                 Director: {movieDetail.director}
             </p>

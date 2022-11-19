@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useGlobalContext } from '../context/starWarsContext';
+import type { Film } from '../types';
 
 const TOC: React.FC = (): JSX.Element => {
     const { films, favorites } = useGlobalContext();
@@ -12,27 +13,27 @@ const TOC: React.FC = (): JSX.Element => {
                 </Link>
             </header>
             <ul>
-                {films.map((note: any) => (
-                    <li key={note.id}>
-                        <span className='pepe'>Episode: {note.episode_id}</span>
+                {films.map((film: Film) => (
+                    <li key={film.id}>
+                        <span className='pepe'>Episode: {film.episode_id}</span>
                         <Link
-                            to={{ pathname: `film/${note.id}` }}
+                            to={{ pathname: `film/${film.id}` }}
                             className='toc__link'
                         >
                             <i
                                 className={`${
-                                    favorites[String(note.id)]
+                                    favorites[String(film.id)]
                                         ? 'fa fa-heart heart'
-                                        : 'fa fa-heart-o heart'
+                                        : null
                                 }`}
                                 aria-hidden='true'
                                 style={{
-                                    color: favorites[String(note.id)]
+                                    color: favorites[String(film.id)]
                                         ? 'red'
                                         : '',
                                 }}
                             />
-                            {'    '} {note.title}
+                            {'    '} {film.title}
                         </Link>
                     </li>
                 ))}

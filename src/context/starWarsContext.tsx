@@ -4,7 +4,7 @@ import React from 'react';
 
 export type GlobalContent = {
     films: Array<Film>;
-    favorites: any;
+    favorites: Record<string, boolean>;
     setFavorites: React.Dispatch<React.SetStateAction<Record<string, boolean>>>;
 };
 export const starWarsContext = createContext<GlobalContent>({

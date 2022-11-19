@@ -1,15 +1,17 @@
 import { API_URL } from './API_URL';
 import axios from 'axios';
-export const getAllFilms = async () => {
+import type { Film, FilmsResponse } from '../../types';
+
+export const getAllFilms = async (): Promise<Film[]> => {
     try {
         const json = await axios(API_URL);
         const response = await json;
-        let data = response.data.results;
-        data = data.map((film: any, index: number) =>
+        const data: FilmsResponse = response.data;
+        const dataWithId = data.results.map((film: Film, index: number) =>
             Object.assign({}, { id: index + 1 }, film)
         );
-        return data;
+        return dataWithId;
     } catch (err) {
-        console.error(err);
+        throw err;
     }
 };

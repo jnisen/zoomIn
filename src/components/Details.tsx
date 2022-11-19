@@ -1,20 +1,16 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState, useCallback } from 'react';
-import type { Film } from '../types';
+import type { Film, filmParams, Favourite, Character, Planet } from '../types';
 import { getSingleFilm } from '../shared/api/getSingleFilm';
-import { imagesFilms } from './images';
+import { imagesFilms } from '../helpers/images';
 import Loader from '../shared/components/Loader';
 import styled from 'styled-components';
 import { useGlobalContext } from '../context/starWarsContext';
 
-type filmParams = {
-    id: string;
-};
-
 const Details: React.FC = (): JSX.Element => {
     const { id } = useParams<filmParams>();
     const { favorites, setFavorites } = useGlobalContext();
-    
+
     const [loading, setLoading] = useState<Boolean>(true);
     const [movieDetail, setMovieDetail] = useState<Film>({
         id: '',
@@ -28,26 +24,18 @@ const Details: React.FC = (): JSX.Element => {
         planets: [],
     });
 
-
-
-    // const [favorites, setFavorites] = useState<Record<Film['id'], boolean>>(
-    //     JSON.parse(localStorage.getItem('favorites') || '{}')
-    // );
-
     const [image, setImage] = useState('');
 
     const getFilm = useCallback(async () => {
-        const film: any = await getSingleFilm(id);
+        const film: Film = await getSingleFilm(id || '');
         setMovieDetail(film);
         setLoading(false);
     }, [id]);
 
-    // useEffect(() => {
-    //     localStorage.setItem('favorites', JSON.stringify(favorites));
-    // }, [favorites]);
-
     useEffect(() => {
-        const imgFilm: any = imagesFilms.filter((img) => String(img.id) === id);
+        const imgFilm: Favourite[] = imagesFilms.filter(
+            (img) => String(img.id) === id
+        );
         setImage(imgFilm[0].image);
         getFilm();
         return () => {
@@ -56,10 +44,10 @@ const Details: React.FC = (): JSX.Element => {
     }, [id, getFilm]);
 
     const DetailBackground = styled.div`
-        height: '100vh';
-        width: 80vw;
+        width: 80%;
         position: relative;
         isolation: isolate;
+        padding-bottom: 50px;
 
         &:after {
             content: '';
@@ -69,9 +57,13 @@ const Details: React.FC = (): JSX.Element => {
             z-index: -1;
             opacity: 0.15;
             background-image: url(${image});
-            background-position: 'center';
-            background-size: 'cover';
-            background-repeat: 'no-repeat';
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        @media only screen and (max-width: 768px) {
+            width: 100%;
         }
     `;
 
@@ -112,14 +104,16 @@ const Details: React.FC = (): JSX.Element => {
 
             <p className='details__description'>Characters</p>
             <div className='details__characters'>
-                {movieDetail.characters.map((character: any) => {
-                    return <div key={character.name}> - {character.name}</div>;
-                })}
+                {movieDetail.characters.map(
+                    (character: Character, index: number) => {
+                        return <div key={index}> - {character.name}</div>;
+                    }
+                )}
             </div>
             <p className='details__description'>Planets</p>
             <div className='details__characters'>
-                {movieDetail.planets.map((planets: any) => {
-                    return <div key={planets.name}> - {planets.name}</div>;
+                {movieDetail.planets.map((planets: Planet, index: number) => {
+                    return <div key={index}> - {planets.name}</div>;
                 })}
             </div>
         </DetailBackground>

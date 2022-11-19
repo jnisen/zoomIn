@@ -1,6 +1,6 @@
 import starWars from '../shared/images/star-wars.png';
 
-function Home() {
+const Home: React.FC = (): JSX.Element => {
     return (
         <div className='container'>
             <h1 className='container__text'>Choose a film of your interest</h1>
@@ -12,6 +12,6 @@ function Home() {
             />
         </div>
     );
-}
+};
 
 export default Home;

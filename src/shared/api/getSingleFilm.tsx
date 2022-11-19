@@ -1,14 +1,26 @@
 import { API_URL } from './API_URL';
 import axios from 'axios';
-import { getDataProperties } from './getDataProperties';
+import { Film, Planet, Character, FilmResponse } from '../../types';
 
-export const getSingleFilm = async (id: any) => {
+export const getSingleFilm = async (id: string): Promise<Film> => {
     try {
         const response = await axios(`${API_URL}/${id}`);
-        const data = response.data;
+        const data: FilmResponse = response.data;
 
-        const characters = await getDataProperties(data.characters);
-        const planets = await getDataProperties(data.planets);
+        const charactersJson = data.characters.map(async (url: Character) => {
+            const json = await axios(url);
+            const response = await json;
+            return response.data;
+        });
+
+        const planetsJson = data.planets.map(async (url: Planet) => {
+            const json = await axios(url);
+            const response = await json;
+            return response.data;
+        });
+
+        const characters = await Promise.all(charactersJson);
+        const planets = await Promise.all(planetsJson);
 
         const film = {
             id,
@@ -23,6 +35,6 @@ export const getSingleFilm = async (id: any) => {
         };
         return film;
     } catch (err) {
-        console.error(err);
+        throw err;
     }
 };

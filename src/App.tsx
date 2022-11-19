@@ -17,7 +17,7 @@ import { getAllFilms } from '../src/shared/api/getAllFilms';
 function App() {
     const [films, setFilms] = useState<Array<Film>>([]);
     const [loading, setLoading] = useState<Boolean>(true);
-    const [favorites, setFavorites] = useState<Record<Film['id'], boolean>>(
+    const [favorites, setFavorites] = useState<Record<string, boolean>>(
         JSON.parse(localStorage.getItem('favorites') || '{}')
     );
 
@@ -38,14 +38,14 @@ function App() {
     const value = {
         films,
         favorites,
-        setFavorites
+        setFavorites,
     };
 
     if (films.length === 0) return <Loader />;
 
     return (
         <starWarsContext.Provider value={value}>
-            <div className='separate'>
+            <div className='wrapper'>
                 <Router>
                     <TOC />
                     <Routes>

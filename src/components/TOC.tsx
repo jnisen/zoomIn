@@ -1,9 +1,15 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useGlobalContext } from '../context/starWarsContext';
 import type { Film } from '../types';
 
 const TOC: React.FC = (): JSX.Element => {
     const { films, favorites } = useGlobalContext();
+
+    let location = useLocation();
+
+    if (location.pathname === '/404') {
+        return <></>;
+    }
 
     return (
         <div className='toc'>
@@ -15,7 +21,9 @@ const TOC: React.FC = (): JSX.Element => {
             <ul>
                 {films.map((film: Film) => (
                     <li key={film.id}>
-                        <span className='pepe'>Episode: {film.episode_id}</span>
+                        <span className='toc__episode'>
+                            Episode: {film.episode_id}
+                        </span>
                         <Link
                             to={{ pathname: `film/${film.id}` }}
                             className='toc__link'

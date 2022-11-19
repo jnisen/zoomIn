@@ -3,12 +3,18 @@ import { starWarsContext } from '../src/context/starWarsContext';
 
 import './App.css';
 
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import {
+    BrowserRouter as Router,
+    Routes,
+    Route,
+    Navigate,
+} from 'react-router-dom';
 
-import Details from './components/Details';
+import Details from '../src/pages/Details/Details';
 import TOC from './components/TOC';
-import Home from './components/Home';
+import Home from './pages/Home';
 import Loader from '../src/shared/components/Loader';
+import NotFound from '../src/pages/NotFound';
 
 import { Film } from '../src/types';
 
@@ -51,6 +57,11 @@ function App() {
                     <Routes>
                         <Route path='/' element={<Home />} />
                         <Route path='/film/:id' element={<Details />} />
+                        <Route path='/404' element={<NotFound />} />
+                        <Route
+                            path='*'
+                            element={<Navigate replace to='/404' />}
+                        />
                     </Routes>
                 </Router>
             </div>

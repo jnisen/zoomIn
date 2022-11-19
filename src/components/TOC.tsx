@@ -12,21 +12,21 @@ const TOC: React.FC = (): JSX.Element => {
     }
 
     return (
-        <div className='toc'>
+        <div className='container__toc'>
             <header>
-                <Link to={{ pathname: `/` }} className='toc__link'>
+                <Link to={{ pathname: `/` }} className='container__toc__link'>
                     Home
                 </Link>
             </header>
             <ul>
                 {films.map((film: Film) => (
                     <li key={film.id}>
-                        <span className='toc__episode'>
+                        <span className='container__toc__episode'>
                             Episode: {film.episode_id}
                         </span>
                         <Link
                             to={{ pathname: `film/${film.id}` }}
-                            className='toc__link'
+                            className='container__toc__link'
                         >
                             <i
                                 className={`${

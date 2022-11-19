@@ -51,7 +51,7 @@ function App() {
 
     return (
         <starWarsContext.Provider value={value}>
-            <div className='wrapper'>
+            <div className='container'>
                 <Router>
                     <TOC />
                     <Routes>

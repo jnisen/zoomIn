@@ -16,7 +16,7 @@ body {
     font-family: 'Lato', sans-serif;
 }
 
-.wrapper {
+.container {
     display: flex;
     flex-direction: row;
     min-height: 100vh;
@@ -56,7 +56,7 @@ body {
     }
 }
 
-.container {
+.container__home {
     width: 80%;
     background-color: black;
     display: flex;
@@ -66,18 +66,18 @@ body {
     margin-left: 20%;
 }
 
-.container__starWars {
+.container__home__starWars {
     width: 40%;
     margin: 0 auto;
 }
 
-.container__text {
+.container__home__text {
     color: azure;
     text-align: center;
     text-transform: uppercase;
 }
 
-.toc {
+.container__toc {
     width: 20%;
     position: fixed;
     left: 0;
@@ -86,7 +86,7 @@ body {
     background-color: #042331;
 }
 
-.toc header {
+.container__toc header {
     font-size: 22px;
     color: black;
     text-align: center;
@@ -95,7 +95,7 @@ body {
     user-select: none;
 }
 
-.toc ul {
+.container__toc ul {
     padding: 10px;
 }
 
@@ -103,7 +103,7 @@ li {
     list-style-type: none;
 }
 
-.toc__link {
+.container__toc__link {
     text-decoration: none;
     display: block;
     height: 100%;
@@ -117,12 +117,12 @@ li {
     border-bottom: 1px solid black;
 }
 
-.toc__link:hover {
+.container__toc__link:hover {
     opacity: 0.7;
     background-color: #18516b;
 }
 
-.toc__episode {
+.container__toc__episode {
     font-size: 10px;
     color: white;
     text-transform: uppercase;
@@ -140,13 +140,15 @@ li {
     max-width: 95%;
 }
 
-.details__director {
+.container__details__director,
+.container__details__producer,
+.container__details__release_date {
     color: black;
     display: flex;
     justify-content: center;
 }
 
-.details__description {
+.container__details__label {
     padding-left: 10px;
     color: black;
     font-size: 1.3rem;
@@ -154,7 +156,8 @@ li {
     font-weight: 800;
 }
 
-.details__characters {
+.container__details__characters,
+.container__details__planets {
     color: black;
     padding-left: 10px;
     display: grid;
@@ -177,23 +180,27 @@ li {
 /* Mobile */
 
 @media only screen and (max-width: 480px) {
-    .wrapper {
+    .container {
         display: grid;
         grid-template-columns: 1fr;
     }
 
     .loader-films,
-    .container {
+    .container__home {
         margin-left: 0;
     }
 
-    .toc,
-    .loader,
-    .container {
-        width: 100%;
+    .container__toc {
+        position: relative;
     }
 
-    .details__characters {
+    .container__toc,
+    .loader,
+    .container__home {
+        width: 100%;
+    }
+    .container__details__characters,
+    .container__details__planets {
         grid-template-columns: repeat(2, 1fr);
     }
 }
@@ -201,27 +208,28 @@ li {
 /* Tablet */
 
 @media only screen and (min-width: 481px) and (max-width: 768px) {
-    .wrapper {
+    .container {
         display: grid;
         grid-template-columns: 1fr;
     }
 
     .loader-films,
-    .container {
+    .container__home {
         margin-left: 0;
     }
 
-    .toc {
+    .container__toc {
         position: relative;
     }
 
-    .toc,
+    .container__toc,
     .loader,
-    .container {
+    .container__home {
         width: 100%;
     }
 
-    .details__characters {
+    .container__details__characters,
+    .container__details__planets {
         grid-template-columns: repeat(3, 1fr);
     }
 }

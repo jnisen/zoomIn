@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import { Film } from '../types';
+import type { Film } from '../types';
 import React from 'react';
 
 export type GlobalContent = {

@@ -1,10 +1,10 @@
 export interface Film {
     id?: string;
-    episode_id: number | undefined;
-    title: string | undefined;
-    opening_crawl: string | undefined;
-    director: string | undefined;
-    producer: string | undefined;
+    episode_id: number;
+    title: string;
+    opening_crawl: string;
+    director: string;
+    producer: string;
     release_date: string;
     characters: Array<Character>;
     planets: Array<Planet>;

@@ -1,4 +1,3 @@
-import React from 'react';
 import type { Film, Character, Planet } from '../../types';
 
 function FilmContent(props: { film: Film }): JSX.Element {
@@ -14,7 +13,9 @@ function FilmContent(props: { film: Film }): JSX.Element {
                 Release Date: {props.film.release_date}
             </span>
             <p className='container__details__label'>Description</p>
-            <p className='details__abstract'>{props.film.opening_crawl}</p>
+            <p className='container__details__abstract'>
+                {props.film.opening_crawl}
+            </p>
             <p className='container__details__label'>Characters</p>
             <div className='container__details__characters'>
                 {props.film.characters.map(

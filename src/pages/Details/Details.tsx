@@ -74,7 +74,7 @@ const Details: React.FC = (): JSX.Element => {
 
     return (
         <DetailBackground>
-            <h1 className='details__title'>{filmDetail.title}</h1>
+            <h1 className='container__details__title'>{filmDetail.title}</h1>
             <DetailsFavourites idFilm={id!} />
             <DetailsContent film={filmDetail} />
         </DetailBackground>

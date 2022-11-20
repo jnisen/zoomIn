@@ -128,12 +128,12 @@ li {
     text-transform: uppercase;
 }
 
-.details__title {
+.container__details__title {
     color: black;
     text-align: center;
 }
 
-.details__abstract {
+.container__details__abstract {
     color: black;
     padding-left: 10px;
     font-size: 1rem;

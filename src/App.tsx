@@ -16,7 +16,7 @@ import Home from './pages/Home';
 import Loader from '../src/shared/components/Loader';
 import NotFound from '../src/pages/NotFound';
 
-import { Film } from '../src/types';
+import type { Film } from '../src/types';
 
 import { getAllFilms } from '../src/shared/api/getAllFilms';
 

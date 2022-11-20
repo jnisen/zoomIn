@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { useGlobalContext } from '../../context/starWarsContext';
 
 function DetailsFavourites(props: { idFilm: string }) {
